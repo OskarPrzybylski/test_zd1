@@ -6,7 +6,6 @@
 ### /string/check/lower?s={value} - endpoint for checking string contains any lower letters
 ### /string/check/number?s={value} - endpoint for checking string contains any numbers
 ### /string/check/special?s={value} - endpoint for checking string contains any special letters
-### /string/check/numberOrUpper?s={value} - endpoint for checking string contains any number or upper letters
 
 
 ## Parameters
