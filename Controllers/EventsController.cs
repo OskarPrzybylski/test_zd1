@@ -1,4 +1,4 @@
-﻿using Ical.Net;
+using Ical.Net;
 using Ical.Net.DataTypes;
 using Ical.Net.Serialization.iCalendar.Serializers;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace zadanie.Controllers
 {
@@ -16,7 +17,7 @@ namespace zadanie.Controllers
     public class EventsController : ControllerBase
     {
         [HttpGet]
-        public string GetEvents([FromQuery] string year, [FromQuery] string month)
+        public IActionResult GetEvents([FromQuery] string year, [FromQuery] string month)
         {
             var listOfEvents = new Dictionary<string, string>();
             using (WebClient client = new WebClient())
@@ -64,7 +65,9 @@ namespace zadanie.Controllers
 
                 var serializer = new CalendarSerializer();
                 var serializedCalendar = serializer.SerializeToString(calendar);
-                return serializedCalendar;
+				var bytesCalendar = Encoding.UTF8.GetBytes(serializedCalendar);
+				MemoryStream ms = new MemoryStream(bytesCalendar);
+                return File(ms, "application/ics", "weeia-events.ics");
             }
         }
     }
